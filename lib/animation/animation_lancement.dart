@@ -25,7 +25,7 @@ class _Animation_lancementState extends State<Animation_lancement>
     final curve =
         CurvedAnimation(parent: _controller, curve: Curves.decelerate);
     _animOffset = Tween<Offset>(
-      begin: Offset(0.0, -0.75),
+      begin: const Offset(0.0, -0.35),
       end: Offset.zero,
     ).animate(curve);
     Timer(Duration(milliseconds: widget.delay), () {

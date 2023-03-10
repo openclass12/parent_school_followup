@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 const Color kPrimaryColorIcon = Color.fromARGB(255, 255, 162, 100);
 const Color kPrimaryColorLight = Color(0xFFFFECDF);
 const Color kTextBlockColor = Color(0xFF313131);
+const Color kTexColor = Color(0xFFFFFFFF);
+
 const Color kPrimarColor = Color(0xFF345FB4);
 const Color kSecondaryCoLOR = Color(0xFF6789CA);
 const Color kContainerColor = Color(0xFF777777);
@@ -13,4 +15,13 @@ const kPrimaryGradientColor = LinearGradient(
   end: Alignment.bottomRight,
   colors: [Color(0xFFFFA53E), Color(0xFFFF7643)],
 );
+const kDefaultPadding = 28.0;
 const kAnimationDuration = Duration(milliseconds: 200);
+
+//from error
+
+const String kChamVide = "champ vide";
+const String kEmailNullError = "entrez votre email";
+const String kEmailInvalidError = "entrez un email valide";
+const String kPassNullError = "mot de passe trop court";
+const String kMatchPassError = "mot de passe n'exsite pas ";

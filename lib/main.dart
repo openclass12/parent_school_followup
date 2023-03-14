@@ -4,6 +4,7 @@ import 'routes/routes.dart';
 import 'demarage_application/splash_screen.dart';
 import 'package:parent_school_followup/constant.dart';
 import 'package:parent_school_followup/formluraire/connexion.dart';
+import 'package:parent_school_followup/formluraire/inscrription.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: theme(),
-      initialRoute: ConnexionScren.routeName,
+      initialRoute: InscirptionScreen.routeName,
       routes: routes,
     );
   }

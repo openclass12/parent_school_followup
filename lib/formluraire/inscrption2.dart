@@ -1,38 +1,35 @@
 import 'package:flutter/material.dart';
-
+import 'package:parent_school_followup/formluraire/resetpassword.dart';
+//import 'package:parent_school_followup/theme.dart';
 import '../animation/animation_lancement.dart';
 import 'package:parent_school_followup/constant.dart';
-
+import 'package:parent_school_followup/formluraire/connexion.dart';
 import '../widget/button.dart';
 
-class ResetPassword extends StatefulWidget {
-  static String routeName = '/Resetpasswod';
+//import 'package:parent_school_followup/size_config.dart';
+
+class Inscrption2Scren extends StatefulWidget {
+  static String routeName = '/Inscription';
+  
 
   @override
-  State<ResetPassword> createState() => _ResetPasswordState();
+  State<Inscrption2Scren> createState() => _Inscrption2ScrenState();
 }
 
-class _ResetPasswordState extends State<ResetPassword> {
+class _Inscrption2ScrenState extends State<Inscrption2Scren> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kTexColor,
-      appBar: AppBar(
-        leading: GestureDetector(
-          child: const Icon(Icons.arrow_back),
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
       body: SingleChildScrollView(
         child: SafeArea(
             child: Column(children: [
+              
           SizedBox(
-            width: MediaQuery.of(context).size.width*0.9,
+            width: MediaQuery.of(context).size.width * 0.9,
             child: Column(
               children: const [
-                SizedBox(height: 50),
+                SizedBox(height: 30),
                 Animation_lancement(
                   delay: 1200,
                   child: FlutterLogo(
@@ -43,18 +40,29 @@ class _ResetPasswordState extends State<ResetPassword> {
                 Animation_lancement(
                   delay: 1500,
                   child: Text(
-                    "Entrez votre Email",
+                    "Matricule Enfant",
                     style: TextStyle(
                         color: kTextBlockColor,
-                        fontSize: 30,
+                        fontSize: 28,
                         fontWeight: FontWeight.w700,
                         fontStyle: FontStyle.italic),
                   ),
                 ),
-                SizedBox(
-                  height: kDefaultPadding * 2,
+                Animation_lancement(
+                  delay: 1800,
+                  child: Text(
+                    "Entrez le matricule d'un enfant \n pour acceder a l'application",
+                    style: TextStyle(
+                        color: kTextBlockColor,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-                Animation_lancement(delay: 2300, child: Padding(
+                SizedBox(
+                  height: kDefaultPadding *2,
+                ),
+                Animation_lancement(delay: 3000, child: Padding(
                   padding: EdgeInsets.only(left: 20),
                   child: SingForm(),
                 )),
@@ -64,6 +72,8 @@ class _ResetPasswordState extends State<ResetPassword> {
           const SizedBox(
             height: kDefaultPadding,
           ),
+
+         
         ])),
       ),
     );
@@ -89,20 +99,20 @@ class _SingFormState extends State<SingForm> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            inputEmail(),
-            const SizedBox(height: 30),
+            inputName(),
             const SizedBox(
-              height: 20,
+              height: 50,
             ),
-            FromErrors(errors: errors),
             Animation_lancement(
               delay: 2500,
               child: DefaultButton(
-                title: 'reset',
+                title: 'Connexion',
                 iconData: Icons.arrow_forward_outlined,
                 onPress: () {
                   if (fromKey.currentState!.validate()) {
                     print("fgd");
+                    Navigator.pushReplacementNamed(
+                        context, ConnexionScren.routeName);
                   } else {
                     print("zerze");
                   }
@@ -113,25 +123,23 @@ class _SingFormState extends State<SingForm> {
         ));
   }
 
-  TextFormField inputEmail() {
+  
+
+  TextFormField inputName() {
     return TextFormField(
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: TextInputType.name,
       validator: (value) {
         if (value!.isEmpty) {
-          return kEmailNullError;
-        } else if (value.isValidEmail() == false) {
-          return kEmailInvalidError;
-        } else if (value.isValidEmail() == true) {
-          return null;
+          return kChamVide;
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Email",
-        hintText: "Enter votre mail",
+        labelText: "Matricule",
+        hintText: "Enter le matricule",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: IconInput(
-          icon: Icons.mail,
+          icon: Icons.key,
           onpress: () {},
         ),
         suffixIconColor: kPrimaryColorIcon,
@@ -140,35 +148,7 @@ class _SingFormState extends State<SingForm> {
   }
 }
 
-class FromErrors extends StatelessWidget {
-  const FromErrors({
-    super.key,
-    required this.errors,
-  });
 
-  final List<String> errors;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(
-          errors.length, (index) => fromErros(error: errors[index])),
-    );
-  }
-
-  Row fromErros({String error = ''}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const Icon(Icons.error_outline_outlined, color: kErrorBorderColor),
-        Text(
-          error,
-          style: const TextStyle(color: kErrorBorderColor, fontSize: 14),
-        )
-      ],
-    );
-  }
-}
 
 class IconInput extends StatelessWidget {
   final IconData icon;
@@ -188,9 +168,4 @@ class IconInput extends StatelessWidget {
   }
 }
 
-extension EmailValidator on String {
-  bool isValidEmail() {
-    return RegExp(
-            r'^[a-zA-Z-0-9]+[\_\-\.]*[a-zA-Z-0-9]+[@][a-zA-Z-0-9]{2,}[\.]([a-zA-Z-0-9]{2,3})').hasMatch(this);
-  }
-}
+void test() {}

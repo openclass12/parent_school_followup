@@ -5,11 +5,16 @@ import '../demarage_application/scroll_pageview.dart';
 import '../demarage_application/splash_screen.dart';
 import '../formluraire/connexion.dart';
 import '../formluraire/resetpassword.dart';
+import '../formluraire/inscrription.dart';
+import '../formluraire/inscrption2.dart';
+
 
 Map<String, WidgetBuilder> routes={
   //definition de toutes les routes
   SplahScreen.routeName: (context)=> SplahScreen(),
   ScrollPageScreen.routeName: (context)=> ScrollPageScreen(),
   ConnexionScren.routeName: (context)=> ConnexionScren(),
- ResetPassword.routeName:(context) => ResetPassword(),
+  ResetPassword.routeName:(context) => ResetPassword(),
+  InscirptionScreen.routeName:(context) => InscirptionScreen(),
+  Inscrption2Scren.routeName:(context)=> Inscrption2Scren(),
 };

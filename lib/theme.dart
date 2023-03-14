@@ -23,25 +23,26 @@ AppBarTheme appbardefault() {
 
 InputDecorationTheme inputdecaration() {
   return InputDecorationTheme(
+    
     contentPadding: const EdgeInsets.symmetric(
-      horizontal: 42,
+      horizontal: 30,
       vertical: 20,
     ),
     enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(28),
         borderSide: const BorderSide(color: kTextBlockColor),
-        gapPadding: 10),
+        gapPadding: 5),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(28),
       borderSide: const BorderSide(color: kTextBlockColor),
-      gapPadding: 10,),
+      gapPadding: 5,),
     errorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(28),
       borderSide: const BorderSide(color: kErrorBorderColor),
-      gapPadding: 10,),
+      gapPadding: 5,),
      focusedErrorBorder:  OutlineInputBorder(
       borderRadius: BorderRadius.circular(28),
       borderSide: const BorderSide(color: kErrorBorderColor),
-      gapPadding: 10,),
+      gapPadding: 5,),
   );
 }

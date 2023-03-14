@@ -3,55 +3,56 @@ import 'package:parent_school_followup/formluraire/resetpassword.dart';
 //import 'package:parent_school_followup/theme.dart';
 import '../animation/animation_lancement.dart';
 import 'package:parent_school_followup/constant.dart';
-
+import 'package:parent_school_followup/formluraire/connexion.dart';
 import '../widget/button.dart';
+
+import '../formluraire/inscrption2.dart';
+
 //import 'package:parent_school_followup/size_config.dart';
-
 late bool _passwordVissible;
+late bool _comfirmVissible;
 
-class ConnexionScren extends StatefulWidget {
-  static String routeName = '/Connexion';
+class InscirptionScreen extends StatefulWidget {
+  static String routeName = '/Inscription';
 
   @override
-  State<ConnexionScren> createState() => _ConnexionScrenState();
+  State<InscirptionScreen> createState() => _InscirptionScreenState();
 }
 
-class _ConnexionScrenState extends State<ConnexionScren> {
-  @override
+class _InscirptionScreenState extends State<InscirptionScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
     _passwordVissible = true;
+    _comfirmVissible = true;
   }
 
   @override
   Widget build(BuildContext context) {
-    // SizeConfig().init(context);
-
     return Scaffold(
       backgroundColor: kTexColor,
       body: SingleChildScrollView(
         child: SafeArea(
             child: Column(children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width*0.9,
+            width: MediaQuery.of(context).size.width * 0.9,
             child: Column(
               children: const [
-                SizedBox(height: 50),
+                SizedBox(height: 30),
                 Animation_lancement(
                   delay: 1200,
                   child: FlutterLogo(
-                    size: 150,
+                    size: 50,
                   ),
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 20),
                 Animation_lancement(
                   delay: 1500,
                   child: Text(
-                    "Welcome back",
+                    "Inscription",
                     style: TextStyle(
                         color: kTextBlockColor,
-                        fontSize: 30,
+                        fontSize: 28,
                         fontWeight: FontWeight.w700,
                         fontStyle: FontStyle.italic),
                   ),
@@ -59,7 +60,7 @@ class _ConnexionScrenState extends State<ConnexionScren> {
                 Animation_lancement(
                   delay: 1800,
                   child: Text(
-                    "Connectez vous avec email et votre password \n pour acceder a l'application",
+                    "Remplissez les champs suivants   \n pour acceder a l'application",
                     style: TextStyle(
                         color: kTextBlockColor,
                         fontSize: 15,
@@ -68,9 +69,9 @@ class _ConnexionScrenState extends State<ConnexionScren> {
                   ),
                 ),
                 SizedBox(
-                  height: kDefaultPadding * 2,
+                  height: kDefaultPadding - 8,
                 ),
-                Animation_lancement(delay: 2300, child: SingForm()),
+                Animation_lancement(delay: 3000, child: SingForm()),
               ],
             ),
           ),
@@ -83,16 +84,25 @@ class _ConnexionScrenState extends State<ConnexionScren> {
               alignment: Alignment.bottomRight,
               child: Padding(
                 padding: const EdgeInsets.only(right: 8),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, ResetPassword.routeName);
-                  },
-                  child: const Text(
-                    'mot de passe oublier ',
-                    style: TextStyle(
-                        color: kPrimaryColorIcon,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                       Text("j'ai un compte ".toLowerCase(), style: const TextStyle(color: kTextBlockColor,fontWeight: FontWeight.w700,fontSize: kDefaultPadding-10),),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, ConnexionScren.routeName);
+                        },
+                        child: Text(
+                          ' connexion'.toUpperCase(),
+                          style: const TextStyle(
+                              color: kPrimaryColorIcon,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -123,13 +133,29 @@ class _SingFormState extends State<SingForm> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            inputName(),
+            const SizedBox(
+              height: 20,
+            ),
+            inputPrenom(),
+            const SizedBox(
+              height: 20,
+            ),
+            inputPhone(),
+            const SizedBox(
+              height: 20,
+            ),
             inputEmail(),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             inputPassword(),
             const SizedBox(
               height: 20,
             ),
+            inputconfirmPassword(),
             FromErrors(errors: errors),
+            const SizedBox(
+              height: 20,
+            ),
             Animation_lancement(
               delay: 2500,
               child: DefaultButton(
@@ -138,6 +164,8 @@ class _SingFormState extends State<SingForm> {
                 onPress: () {
                   if (fromKey.currentState!.validate()) {
                     print("fgd");
+                    Navigator.pushReplacementNamed(
+                        context, Inscrption2Scren.routeName);
                   } else {
                     print("zerze");
                   }
@@ -148,7 +176,7 @@ class _SingFormState extends State<SingForm> {
         ));
   }
 
-TextFormField inputPassword() {
+  TextFormField inputPassword() {
     return TextFormField(
       obscureText: _passwordVissible,
       validator: (value) {
@@ -168,6 +196,7 @@ TextFormField inputPassword() {
           onpress: () {
             setState(() {
               _passwordVissible = !_passwordVissible;
+              _comfirmVissible = !_comfirmVissible;
             });
           },
         ),
@@ -176,31 +205,121 @@ TextFormField inputPassword() {
     );
   }
 
-  TextFormField inputEmail() {
+  TextFormField inputName() {
     return TextFormField(
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: TextInputType.name,
       validator: (value) {
         if (value!.isEmpty) {
-          return kEmailNullError;
-        } else if (value.isValidEmail() == false) {
-          return kEmailInvalidError;
-        } else if(value.isValidEmail()==false){
-          return null;
+          return kChamVide;
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Email",
-        hintText: "Enter votre mail",
+        labelText: "Nom",
+        hintText: "Enter votre nom",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: IconInput(
-          icon: Icons.mail,
+          icon: Icons.person,
           onpress: () {},
         ),
         suffixIconColor: kPrimaryColorIcon,
       ),
     );
   }
+}
+
+TextFormField inputPrenom() {
+  return TextFormField(
+    keyboardType: TextInputType.name,
+    validator: (value) {
+      if (value!.isEmpty) {
+        return kChamVide;
+      }
+      return null;
+    },
+    decoration: InputDecoration(
+      labelText: "Prenom",
+      hintText: "Enter votre prenom",
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+      suffixIcon: IconInput(
+        icon: Icons.person,
+        onpress: () {},
+      ),
+      suffixIconColor: kPrimaryColorIcon,
+    ),
+  );
+}
+
+TextFormField inputPhone() {
+  return TextFormField(
+    keyboardType: TextInputType.phone,
+    validator: (value) {
+      if (value!.isEmpty) {
+        return kChamVide;
+      }
+      return null;
+    },
+    decoration: InputDecoration(
+      labelText: "telephone",
+      hintText: "Enter votre numero de telephone",
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+      suffixIcon: IconInput(
+        icon: Icons.call,
+        onpress: () {},
+      ),
+      suffixIconColor: kPrimaryColorIcon,
+    ),
+  );
+}
+
+TextFormField inputEmail() {
+  return TextFormField(
+    keyboardType: TextInputType.emailAddress,
+    validator: (value) {
+      if (value!.isEmpty) {
+        return kEmailNullError;
+      } else if (value.isValidEmail() == false) {
+        return kEmailInvalidError;
+      } else if (value.isValidEmail() == false) {
+        return null;
+      }
+      return null;
+    },
+    decoration: InputDecoration(
+      labelText: "Email",
+      hintText: "Enter votre mail",
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+      suffixIcon: IconInput(
+        icon: Icons.mail,
+        onpress: () {},
+      ),
+      suffixIconColor: kPrimaryColorIcon,
+    ),
+  );
+}
+
+TextFormField inputconfirmPassword() {
+  return TextFormField(
+    obscureText: _comfirmVissible,
+    validator: (value) {
+      if (value!.isEmpty) {
+        return kChamVide;
+      } else if (value.length < 8) {
+        return kEmailInvalidError;
+      }
+      return null;
+    },
+    decoration: InputDecoration(
+      labelText: "password",
+      hintText: "Enter votre mot de passe",
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+      suffixIcon: IconInput(
+        icon: _passwordVissible ? Icons.lock : Icons.lock_open,
+        onpress: () {},
+      ),
+      suffixIconColor: kPrimaryColorIcon,
+    ),
+  );
 }
 
 class FromErrors extends StatelessWidget {
@@ -250,3 +369,5 @@ class IconInput extends StatelessWidget {
     );
   }
 }
+
+void test() {}

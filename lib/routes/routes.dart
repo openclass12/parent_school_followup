@@ -6,7 +6,8 @@ import '../demarage_application/splash_screen.dart';
 import '../formluraire/connexion.dart';
 import '../formluraire/resetpassword.dart';
 import '../formluraire/inscrription.dart';
-import '../formluraire/inscrption2.dart';
+import '../formluraire/validation.dart';
+import '../home/home.dart';
 
 
 Map<String, WidgetBuilder> routes={
@@ -16,5 +17,6 @@ Map<String, WidgetBuilder> routes={
   ConnexionScren.routeName: (context)=> ConnexionScren(),
   ResetPassword.routeName:(context) => ResetPassword(),
   InscirptionScreen.routeName:(context) => InscirptionScreen(),
-  Inscrption2Scren.routeName:(context)=> Inscrption2Scren(),
+  ValidationReset.routeName:(context)=> ValidationReset(),
+  HomeNavigation.routeName:(context) =>  HomeNavigation(),
 };

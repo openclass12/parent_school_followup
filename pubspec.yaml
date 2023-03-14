@@ -37,10 +37,15 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_svg: ^0.17.4
   provider: ^4.3.1
+  firebase_core: ^2.7.1
+  firebase_auth: ^4.2.10
+  firebase_storage: ^11.0.15
+  cloud_firestore: ^4.4.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -64,6 +69,7 @@ flutter:
   assets:
     - image/
     - image/demarrage/
+    - image/photo_etudiant/
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

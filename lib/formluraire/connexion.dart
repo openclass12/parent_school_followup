@@ -4,6 +4,7 @@ import 'package:parent_school_followup/formluraire/resetpassword.dart';
 import '../animation/animation_lancement.dart';
 import 'package:parent_school_followup/constant.dart';
 
+import '../home/home.dart';
 import '../widget/button.dart';
 //import 'package:parent_school_followup/size_config.dart';
 
@@ -34,7 +35,7 @@ class _ConnexionScrenState extends State<ConnexionScren> {
         child: SafeArea(
             child: Column(children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width*0.9,
+            width: MediaQuery.of(context).size.width * 0.9,
             child: Column(
               children: const [
                 SizedBox(height: 50),
@@ -137,7 +138,9 @@ class _SingFormState extends State<SingForm> {
                 iconData: Icons.arrow_forward_outlined,
                 onPress: () {
                   if (fromKey.currentState!.validate()) {
-                    print("fgd");
+                     Navigator.pushReplacement(
+                        context, MaterialPageRoute(builder: (context)=>HomeNavigation()));
+                  
                   } else {
                     print("zerze");
                   }
@@ -148,7 +151,7 @@ class _SingFormState extends State<SingForm> {
         ));
   }
 
-TextFormField inputPassword() {
+  TextFormField inputPassword() {
     return TextFormField(
       obscureText: _passwordVissible,
       validator: (value) {
@@ -184,7 +187,7 @@ TextFormField inputPassword() {
           return kEmailNullError;
         } else if (value.isValidEmail() == false) {
           return kEmailInvalidError;
-        } else if(value.isValidEmail()==false){
+        } else if (value.isValidEmail() == false) {
           return null;
         }
         return null;

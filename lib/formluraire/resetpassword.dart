@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parent_school_followup/formluraire/connexion.dart';
 
 import '../animation/animation_lancement.dart';
 import 'package:parent_school_followup/constant.dart';
@@ -29,7 +30,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         child: SafeArea(
             child: Column(children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width*0.9,
+            width: MediaQuery.of(context).size.width * 0.9,
             child: Column(
               children: const [
                 SizedBox(height: 50),
@@ -54,10 +55,12 @@ class _ResetPasswordState extends State<ResetPassword> {
                 SizedBox(
                   height: kDefaultPadding * 2,
                 ),
-                Animation_lancement(delay: 2300, child: Padding(
-                  padding: EdgeInsets.only(left: 20),
-                  child: SingForm(),
-                )),
+                Animation_lancement(
+                    delay: 2300,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 20),
+                      child: SingForm(),
+                    )),
               ],
             ),
           ),
@@ -103,6 +106,7 @@ class _SingFormState extends State<SingForm> {
                 onPress: () {
                   if (fromKey.currentState!.validate()) {
                     print("fgd");
+                    Navigator.pushNamed(context, ConnexionScren.routeName);
                   } else {
                     print("zerze");
                   }
@@ -191,6 +195,7 @@ class IconInput extends StatelessWidget {
 extension EmailValidator on String {
   bool isValidEmail() {
     return RegExp(
-            r'^[a-zA-Z-0-9]+[\_\-\.]*[a-zA-Z-0-9]+[@][a-zA-Z-0-9]{2,}[\.]([a-zA-Z-0-9]{2,3})').hasMatch(this);
+            r'^[a-zA-Z-0-9]+[\_\-\.]*[a-zA-Z-0-9]+[@][a-zA-Z-0-9]{2,}[\.]([a-zA-Z-0-9]{2,3})')
+        .hasMatch(this);
   }
 }

@@ -6,7 +6,7 @@ import 'package:parent_school_followup/constant.dart';
 import 'package:parent_school_followup/formluraire/connexion.dart';
 import '../widget/button.dart';
 
-import '../formluraire/inscrption2.dart';
+//import '../formluraire/inscrption2.dart';
 
 //import 'package:parent_school_followup/size_config.dart';
 late bool _passwordVissible;
@@ -137,14 +137,14 @@ class _SingFormState extends State<SingForm> {
             const SizedBox(
               height: 20,
             ),
-            inputPrenom(),
-            const SizedBox(
-              height: 20,
-            ),
-            inputPhone(),
-            const SizedBox(
-              height: 20,
-            ),
+           // inputPrenom(),
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            // inputPhone(),
+            // const SizedBox(
+            //   height: 20,
+            // ),
             inputEmail(),
             const SizedBox(height: 20),
             inputPassword(),
@@ -163,9 +163,9 @@ class _SingFormState extends State<SingForm> {
                 iconData: Icons.arrow_forward_outlined,
                 onPress: () {
                   if (fromKey.currentState!.validate()) {
-                    print("fgd");
-                    Navigator.pushReplacementNamed(
-                        context, Inscrption2Scren.routeName);
+                    
+                    Navigator.pushNamed(
+                        context, ConnexionScren.routeName);
                   } else {
                     print("zerze");
                   }

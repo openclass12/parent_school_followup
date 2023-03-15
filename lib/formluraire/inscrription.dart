@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:parent_school_followup/formluraire/resetpassword.dart';
+import 'package:parent_school_followup/services/firebase_auth.dart';
 //import 'package:parent_school_followup/theme.dart';
 import '../animation/animation_lancement.dart';
 import 'package:parent_school_followup/constant.dart';
 import 'package:parent_school_followup/formluraire/connexion.dart';
 import '../widget/button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 //import '../formluraire/inscrption2.dart';
 
 //import 'package:parent_school_followup/size_config.dart';
 late bool _passwordVissible;
 late bool _comfirmVissible;
+final TextEditingController _namecontroller = TextEditingController();
+final TextEditingController _emailcontroller = TextEditingController();
+final TextEditingController _passcontroller = TextEditingController();
 
 class InscirptionScreen extends StatefulWidget {
   static String routeName = '/Inscription';
@@ -89,10 +94,17 @@ class _InscirptionScreenState extends State<InscirptionScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                       Text("j'ai un compte ".toLowerCase(), style: const TextStyle(color: kTextBlockColor,fontWeight: FontWeight.w700,fontSize: kDefaultPadding-10),),
+                      Text(
+                        "j'ai un compte ".toLowerCase(),
+                        style: const TextStyle(
+                            color: kTextBlockColor,
+                            fontWeight: FontWeight.w700,
+                            fontSize: kDefaultPadding - 10),
+                      ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, ConnexionScren.routeName);
+                          Navigator.pushNamed(
+                              context, ConnexionScren.routeName);
                         },
                         child: Text(
                           ' connexion'.toUpperCase(),
@@ -124,8 +136,35 @@ class SingForm extends StatefulWidget {
 }
 
 class _SingFormState extends State<SingForm> {
+  late String name;
+  late String email;
+  late String password;
+
   final GlobalKey<FormState> fromKey = GlobalKey<FormState>();
   final List<String> errors = [];
+
+  void dispose() {
+    super.dispose();
+    _emailcontroller.dispose();
+    _passcontroller.dispose();
+    _namecontroller.dispose();
+  }
+
+  void signUpuser() async {
+    FirebaseAuthentification(FirebaseAuth.instance).signUpWithEmail(
+        email: _emailcontroller.text.trim(),
+        password: _passcontroller.text.trim(),
+        name: _namecontroller.text,
+        context: context);
+    if(FirebaseAuth.instance.currentUser!.emailVerified){
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => ConnexionScren()));
+    }
+
+      
+        
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -137,7 +176,7 @@ class _SingFormState extends State<SingForm> {
             const SizedBox(
               height: 20,
             ),
-           // inputPrenom(),
+            // inputPrenom(),
             // const SizedBox(
             //   height: 20,
             // ),
@@ -161,15 +200,7 @@ class _SingFormState extends State<SingForm> {
               child: DefaultButton(
                 title: 'connexion',
                 iconData: Icons.arrow_forward_outlined,
-                onPress: () {
-                  if (fromKey.currentState!.validate()) {
-                    
-                    Navigator.pushNamed(
-                        context, ConnexionScren.routeName);
-                  } else {
-                    print("zerze");
-                  }
-                },
+                onPress: signUpuser,
               ),
             ),
           ],
@@ -187,6 +218,7 @@ class _SingFormState extends State<SingForm> {
         }
         return null;
       },
+      controller: _passcontroller,
       decoration: InputDecoration(
         labelText: "password",
         hintText: "Enter votre mot de passe",
@@ -214,6 +246,7 @@ class _SingFormState extends State<SingForm> {
         }
         return null;
       },
+      controller: _namecontroller,
       decoration: InputDecoration(
         labelText: "Nom",
         hintText: "Enter votre nom",
@@ -285,6 +318,7 @@ TextFormField inputEmail() {
       }
       return null;
     },
+    controller: _emailcontroller,
     decoration: InputDecoration(
       labelText: "Email",
       hintText: "Enter votre mail",

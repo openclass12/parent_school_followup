@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 //import '../demarage_application/splash_screen.dart';
 import 'package:parent_school_followup/constant.dart';
 import 'package:parent_school_followup/home/acceuil.dart';
+import 'package:parent_school_followup/home/page%20acceuil/presentation.dart';
 
 
 class HomeNavigation extends StatefulWidget {
@@ -15,9 +16,10 @@ class HomeNavigation extends StatefulWidget {
 
 class _HomeNavigationState extends State<HomeNavigation> {
   int _selectIndex = 0;
-  final List<Widget> _tabs = const [
+  final List<Widget> _tabs =  [
+  
     AceuilScrenn(),
-    Center(
+   const  Center(
       child: Text('FGDFG'),
     ),
   ];

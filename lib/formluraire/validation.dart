@@ -49,7 +49,7 @@ class _ValidationResetState extends State<ValidationReset> {
                 Animation_lancement(
                   delay: 1800,
                   child: Text(
-                    "Entrez le matricule d'un enfant  \n pour acceder a l'application",
+                    "Entrez un  matricule d'un enfant  \n pour le suivre",
                     style: TextStyle(
                         color: kTextBlockColor,
                         fontSize: 15,
@@ -92,7 +92,10 @@ class _SingForm_matState extends State<SingForm_mat> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            inputName(),
+            Padding(
+              padding: const EdgeInsets.only(left: kDefaultPadding),
+              child: inputName(),
+            ),
             const SizedBox(height: 30),
             FromErrors(errors: errors),
             Animation_lancement(

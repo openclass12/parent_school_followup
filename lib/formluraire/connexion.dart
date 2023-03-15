@@ -7,8 +7,12 @@ import 'package:parent_school_followup/constant.dart';
 import '../home/home.dart';
 import '../widget/button.dart';
 //import 'package:parent_school_followup/size_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:parent_school_followup/services/firebase_auth.dart';
 
 late bool _passwordVissible;
+final TextEditingController _emailcontroller = TextEditingController();
+final TextEditingController _passcontroller = TextEditingController();
 
 class ConnexionScren extends StatefulWidget {
   static String routeName = '/Connexion';
@@ -117,6 +121,18 @@ class SingForm extends StatefulWidget {
 class _SingFormState extends State<SingForm> {
   final GlobalKey<FormState> fromKey = GlobalKey<FormState>();
   final List<String> errors = [];
+
+  void dispose() {
+    super.dispose();
+    _emailcontroller.dispose();
+    _passcontroller.dispose();
+  }
+
+  void loginUpUser() async {
+    FirebaseAuthentification(FirebaseAuth.instance).loginWidthEmailPassword(
+        email: _emailcontroller.text, password: _passcontroller.text, context: context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -136,15 +152,16 @@ class _SingFormState extends State<SingForm> {
               child: DefaultButton(
                 title: 'connexion',
                 iconData: Icons.arrow_forward_outlined,
-                onPress: () {
-                  if (fromKey.currentState!.validate()) {
-                     Navigator.pushReplacement(
-                        context, MaterialPageRoute(builder: (context)=>HomeNavigation()));
-                  
-                  } else {
-                    print("zerze");
-                  }
-                },
+                onPress: loginUpUser,
+                //   if (fromKey.currentState!.validate()) {
+
+                //     // Navigator.pushReplacement(
+                //     //     context,
+                //     //     MaterialPageRoute(
+                //     //         builder: (context) => HomeNavigation()));
+                //   } else {
+                //     print("zerze");
+                //   }
               ),
             ),
           ],
@@ -162,6 +179,7 @@ class _SingFormState extends State<SingForm> {
         }
         return null;
       },
+      controller: _passcontroller,
       decoration: InputDecoration(
         labelText: "password",
         hintText: "Enter votre mot de passe",
@@ -192,6 +210,7 @@ class _SingFormState extends State<SingForm> {
         }
         return null;
       },
+      controller: _emailcontroller,
       decoration: InputDecoration(
         labelText: "Email",
         hintText: "Enter votre mail",

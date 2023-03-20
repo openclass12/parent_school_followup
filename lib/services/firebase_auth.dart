@@ -9,20 +9,31 @@ class FirebaseAuthentification {
   FirebaseAuthentification(this._auth);
 
   //Email inscrption
-  Future<void> signUpWithEmail({
+  Future<String> signUpWithEmail({
     required String email,
     required String name,
     required String password,
     required BuildContext context,
   }) async {
-    try {
-      await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+    String res = "test tout les chapm";
+    if (email.isNotEmpty || name.isNotEmpty || password.isNotEmpty) {
+      try {
+        await _auth.createUserWithEmailAndPassword(
+            email: email, password: password);
+        // if (_auth.currentUser!.emailVerified) {
 
-      await sendEmailVerifacation(context);
-    } on FirebaseAuthException catch (e) {
-      showSnackbar(context, e.message!);
+        // }
+        if (_auth.currentUser!.emailVerified) {
+          await sendEmailVerifacation(context);
+        }
+        res = "succes";
+      } on FirebaseAuthException catch (e) {
+        showSnackbar(context, e.message!);
+      }
+    } else {
+      showSnackbar(context, "entrer des champs correct");
     }
+    return res;
   }
 //login
 
@@ -33,9 +44,8 @@ class FirebaseAuthentification {
   }) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-      if (!_auth.currentUser!.emailVerified){
+      if (!_auth.currentUser!.emailVerified) {
         await sendEmailVerifacation(context);
-        
       }
     } on FirebaseAuthException catch (e) {
       showSnackbar(context, e.message!);
@@ -52,3 +62,5 @@ class FirebaseAuthentification {
     }
   }
 }
+
+class FireBase {}

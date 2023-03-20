@@ -24,6 +24,8 @@ class _AceuilScrennState extends State<AceuilScrenn> {
     Etudiant("IucQ20214", "Gamo silatcho", "image/photo_etudiant/photo2.JPG",
         "genie logicile", ["math", "francais"], [10, 12])
   ];
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +78,7 @@ class afficher_carte extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => Presentation(etudiant: etudiant)));
+                  builder: (context) => Presentation(etudiant: etudiant,)));
         },
         child: Container(
           width: MediaQuery.of(context).size.width * 0.9,

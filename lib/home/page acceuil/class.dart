@@ -1,3 +1,5 @@
+
+
 class Etudiant {
   String matricule;
   String nom;
@@ -6,6 +8,14 @@ class Etudiant {
   List<String> matiere;
   List<int> notes;
 
-  Etudiant(this.matricule,  this.nom,  this.imagephoto,
-     this.filiere,  this.matiere,  this.notes);
+  Etudiant(this.matricule, this.nom, this.imagephoto, this.filiere,
+      this.matiere, this.notes);
 }
+
+class Notes {
+  String nommatieres;
+  List<String> moyenne;
+  Notes(this.nommatieres, this.moyenne);
+}
+
+

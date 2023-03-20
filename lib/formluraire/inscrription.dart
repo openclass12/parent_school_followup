@@ -5,6 +5,7 @@ import 'package:parent_school_followup/services/firebase_auth.dart';
 import '../animation/animation_lancement.dart';
 import 'package:parent_school_followup/constant.dart';
 import 'package:parent_school_followup/formluraire/connexion.dart';
+import '../home/home.dart';
 import '../widget/button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -150,21 +151,6 @@ class _SingFormState extends State<SingForm> {
     _namecontroller.dispose();
   }
 
-  void signUpuser() async {
-    FirebaseAuthentification(FirebaseAuth.instance).signUpWithEmail(
-        email: _emailcontroller.text.trim(),
-        password: _passcontroller.text.trim(),
-        name: _namecontroller.text,
-        context: context);
-    if(FirebaseAuth.instance.currentUser!.emailVerified){
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => ConnexionScren()));
-    }
-
-      
-        
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -200,7 +186,7 @@ class _SingFormState extends State<SingForm> {
               child: DefaultButton(
                 title: 'connexion',
                 iconData: Icons.arrow_forward_outlined,
-                onPress: signUpuser,
+                onPress: (){},
               ),
             ),
           ],

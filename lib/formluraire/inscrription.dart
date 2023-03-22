@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parent_school_followup/formluraire/resetpassword.dart';
+import 'package:parent_school_followup/services/auth_services.dart';
 import 'package:parent_school_followup/services/firebase_auth.dart';
 //import 'package:parent_school_followup/theme.dart';
 import '../animation/animation_lancement.dart';
@@ -27,7 +28,6 @@ class InscirptionScreen extends StatefulWidget {
 
 class _InscirptionScreenState extends State<InscirptionScreen> {
   void initState() {
-    // TODO: implement initState
     super.initState();
     _passwordVissible = true;
     _comfirmVissible = true;
@@ -108,7 +108,7 @@ class _InscirptionScreenState extends State<InscirptionScreen> {
                               context, ConnexionScren.routeName);
                         },
                         child: Text(
-                          ' connexion'.toUpperCase(),
+                          'connexion'.toUpperCase(),
                           style: const TextStyle(
                               color: kPrimaryColorIcon,
                               fontSize: 20,
@@ -137,12 +137,17 @@ class SingForm extends StatefulWidget {
 }
 
 class _SingFormState extends State<SingForm> {
-  late String name;
-  late String email;
-  late String password;
-
   final GlobalKey<FormState> fromKey = GlobalKey<FormState>();
   final List<String> errors = [];
+  late AuthServices _authServices;
+
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    _authServices = AuthServices();
+    super.initState();
+  }
 
   void dispose() {
     super.dispose();
@@ -154,43 +159,82 @@ class _SingFormState extends State<SingForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: fromKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            inputName(),
-            const SizedBox(
-              height: 20,
-            ),
-            // inputPrenom(),
-            // const SizedBox(
-            //   height: 20,
-            // ),
-            // inputPhone(),
-            // const SizedBox(
-            //   height: 20,
-            // ),
-            inputEmail(),
-            const SizedBox(height: 20),
-            inputPassword(),
-            const SizedBox(
-              height: 20,
-            ),
-            inputconfirmPassword(),
-            FromErrors(errors: errors),
-            const SizedBox(
-              height: 20,
-            ),
-            Animation_lancement(
-              delay: 2500,
-              child: DefaultButton(
-                title: 'connexion',
-                iconData: Icons.arrow_forward_outlined,
-                onPress: (){},
+      key: fromKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          inputName(),
+          const SizedBox(
+            height: 20,
+          ),
+          // inputPrenom(),
+          // const SizedBox(
+          //   height: 20,
+          // ),
+          // inputPhone(),
+          // const SizedBox(
+          //   height: 20,
+          // ),
+          inputEmail(),
+          const SizedBox(height: 20),
+          inputPassword(),
+          const SizedBox(
+            height: 20,
+          ),
+          inputconfirmPassword(),
+          FromErrors(errors: errors),
+          const SizedBox(
+            height: 20,
+          ),
+          if (_isLoading)
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(),
               ),
             ),
-          ],
-        ));
+          Animation_lancement(
+            delay: 2500,
+            child: DefaultButton(
+              title: 'connexion',
+              iconData: Icons.arrow_forward_outlined,
+              onPress: () async {
+                if (fromKey.currentState?.validate() ?? false) {
+                  try {
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    var user = await _authServices.registerWithEmailAndPassword(
+                      name: _namecontroller.text,
+                      email: _emailcontroller.text,
+                      password: _passcontroller.text,
+                    );
+
+                    setState(() {
+                      _isLoading = false;
+                    });
+
+                    Navigator.of(context).popAndPushNamed(
+                      HomeNavigation.routeName,
+                    );
+                  } on FirebaseAuthException catch (e) {
+                    print(e);
+                    setState(() {
+                      _isLoading = false;
+                    });
+                  } catch (e) {
+                    print(e);
+                    setState(() {
+                      _isLoading = false;
+                    });
+                  }
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   TextFormField inputPassword() {

@@ -8,8 +8,7 @@ import 'package:parent_school_followup/formluraire/connexion.dart';
 import 'package:parent_school_followup/formluraire/inscrription.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -25,9 +24,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: theme(),
-      initialRoute:    HomeNavigation.routeName, 
+      initialRoute: ConnexionScren.routeName,
       routes: routes,
-
     );
   }
 }

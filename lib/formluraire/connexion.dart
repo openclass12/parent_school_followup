@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:parent_school_followup/formluraire/inscrription.dart';
 import 'package:parent_school_followup/formluraire/resetpassword.dart';
 //import 'package:parent_school_followup/theme.dart';
 import '../animation/animation_lancement.dart';
 import 'package:parent_school_followup/constant.dart';
 
 import '../home/home.dart';
+import '../services/auth_services.dart';
 import '../widget/button.dart';
 //import 'package:parent_school_followup/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:parent_school_followup/services/firebase_auth.dart';
+
+import '../widget/showSnackbar.dart';
+//import 'package:parent_school_followup/services/firebase_auth.dart';
 
 late bool _passwordVissible;
 final TextEditingController _emailcontroller = TextEditingController();
@@ -24,7 +28,6 @@ class ConnexionScren extends StatefulWidget {
 class _ConnexionScrenState extends State<ConnexionScren> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _passwordVissible = true;
   }
@@ -45,15 +48,8 @@ class _ConnexionScrenState extends State<ConnexionScren> {
                 SizedBox(height: 50),
                 Animation_lancement(
                   delay: 1200,
-                  child: FlutterLogo(
-                    size: 150,
-                  ),
-                ),
-                SizedBox(height: 50),
-                Animation_lancement(
-                  delay: 1500,
                   child: Text(
-                    "Welcome back",
+                    "Connexion",
                     style: TextStyle(
                         color: kTextBlockColor,
                         fontSize: 30,
@@ -61,20 +57,14 @@ class _ConnexionScrenState extends State<ConnexionScren> {
                         fontStyle: FontStyle.italic),
                   ),
                 ),
+                SizedBox(height: 50),
                 Animation_lancement(
-                  delay: 1800,
-                  child: Text(
-                    "Connectez vous avec email et votre password \n pour acceder a l'application",
-                    style: TextStyle(
-                        color: kTextBlockColor,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700),
-                    textAlign: TextAlign.center,
+                  delay: 1500,
+                  child: FlutterLogo(
+                    size: 150,
                   ),
                 ),
-                SizedBox(
-                  height: kDefaultPadding * 2,
-                ),
+                SizedBox(height: 50),
                 Animation_lancement(delay: 2300, child: SingForm()),
               ],
             ),
@@ -83,24 +73,25 @@ class _ConnexionScrenState extends State<ConnexionScren> {
             height: kDefaultPadding,
           ),
           Animation_lancement(
-            delay: 2600,
-            child: Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, ResetPassword.routeName);
-                  },
-                  child: const Text(
-                    'mot de passe oublier ',
-                    style: TextStyle(
-                        color: kPrimaryColorIcon,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700),
-                  ),
+            delay: 3000,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "j'ai pas de compte ? ",
+                  style: TextStyle(color: kDefaultIconDarkColor, fontSize: 16),
                 ),
-              ),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                              MaterialPageRoute(builder: ((context) => InscirptionScreen()))
+                            );
+                    },
+                    child: const Text(
+                      "Inscription",
+                      style: TextStyle(color: kPrimarColor, fontSize: 16,fontWeight: FontWeight.w600),
+                    )),
+              ],
             ),
           )
         ])),
@@ -119,8 +110,17 @@ class SingForm extends StatefulWidget {
 }
 
 class _SingFormState extends State<SingForm> {
-  final GlobalKey<FormState> fromKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final List<String> errors = [];
+  late AuthServices _authServices;
+
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    _authServices = AuthServices();
+    super.initState();
+  }
 
   void dispose() {
     super.dispose();
@@ -128,130 +128,139 @@ class _SingFormState extends State<SingForm> {
     _passcontroller.dispose();
   }
 
-  void loginUpUser() async {
-    FirebaseAuthentification(FirebaseAuth.instance).loginWidthEmailPassword(
-        email: _emailcontroller.text, password: _passcontroller.text, context: context);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: fromKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            inputEmail(),
-            const SizedBox(height: 30),
-            inputPassword(),
-            const SizedBox(
-              height: 20,
-            ),
-            FromErrors(errors: errors),
-            Animation_lancement(
-              delay: 2500,
-              child: DefaultButton(
-                title: 'connexion',
-                iconData: Icons.arrow_forward_outlined,
-                onPress: loginUpUser,
-                //   if (fromKey.currentState!.validate()) {
-
-                //     // Navigator.pushReplacement(
-                //     //     context,
-                //     //     MaterialPageRoute(
-                //     //         builder: (context) => HomeNavigation()));
-                //   } else {
-                //     print("zerze");
-                //   }
+        key: formKey,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return kEmailNullError;
+                  } else if (value.isValidEmail() == false) {
+                    return kEmailInvalidError;
+                  } else if (value.isValidEmail() == false) {
+                    return null;
+                  }
+                  return null;
+                },
+                controller: _emailcontroller,
+                decoration: InputDecoration(
+                  labelText: "Email",
+                  hintText: "Enter votre mail",
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  suffixIcon: IconInput(
+                    icon: Icons.mail,
+                    onpress: () {},
+                  ),
+                  suffixIconColor: kPrimaryColorIcon,
+                ),
+              ),
+              const SizedBox(height: 30),
+              TextFormField(
+                obscureText: _passwordVissible,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return kChamVide;
+                  } else if (value.length < 8) {
+                    return kEmailInvalidError;
+                  }
+                  return null;
+                },
+                controller: _passcontroller,
+                decoration: InputDecoration(
+                  labelText: "password",
+                  hintText: "Enter votre mot de passe",
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  suffixIcon: IconInput(
+                    icon: _passwordVissible ? Icons.lock : Icons.lock_open,
+                    onpress: () {
+                      setState(() {
+                        _passwordVissible = !_passwordVissible;
+                      });
+                    },
+                  ),
+                  suffixIconColor: kPrimaryColorIcon,
+                ),
+              ),
+              Animation_lancement(
+                delay: 2600,
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, ResetPassword.routeName);
+                      },
+                      child: const Text(
+                        'mot de passe oublier ',
+                        style: TextStyle(
+                            color: kPrimaryColorIcon,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: kDefaultPadding,
+              ),
+              if (isLoading)
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(),
               ),
             ),
-          ],
+              Animation_lancement(
+                delay: 2500,
+                child: DefaultButton(
+                    title: 'connexion',
+                    iconData: Icons.arrow_forward_outlined,
+                    onPress: () async {
+                      if (formKey.currentState?.validate() ?? false) {
+                        try {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          var user =
+                              await _authServices.loginWithEmailAndPassword(
+                            email: _emailcontroller.text,
+                            password: _passcontroller.text,
+                          );
+
+                          setState(() {
+                            isLoading = false;
+                          });
+
+                          Navigator.of(context).popAndPushNamed(
+                            HomeNavigation.routeName,
+                          );
+                        } on FirebaseAuthException catch (e) {
+                          showSnackbar(context,e.message!);
+                          setState(() {
+                            isLoading = false;
+                          });
+                        } catch (e) {
+                          
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
+                      }
+                    }),
+              ),
+            ],
+          ),
         ));
-  }
-
-  TextFormField inputPassword() {
-    return TextFormField(
-      obscureText: _passwordVissible,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return kChamVide;
-        } else if (value.length < 8) {
-          return kEmailInvalidError;
-        }
-        return null;
-      },
-      controller: _passcontroller,
-      decoration: InputDecoration(
-        labelText: "password",
-        hintText: "Enter votre mot de passe",
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: IconInput(
-          icon: _passwordVissible ? Icons.lock : Icons.lock_open,
-          onpress: () {
-            setState(() {
-              _passwordVissible = !_passwordVissible;
-            });
-          },
-        ),
-        suffixIconColor: kPrimaryColorIcon,
-      ),
-    );
-  }
-
-  TextFormField inputEmail() {
-    return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return kEmailNullError;
-        } else if (value.isValidEmail() == false) {
-          return kEmailInvalidError;
-        } else if (value.isValidEmail() == false) {
-          return null;
-        }
-        return null;
-      },
-      controller: _emailcontroller,
-      decoration: InputDecoration(
-        labelText: "Email",
-        hintText: "Enter votre mail",
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: IconInput(
-          icon: Icons.mail,
-          onpress: () {},
-        ),
-        suffixIconColor: kPrimaryColorIcon,
-      ),
-    );
-  }
-}
-
-class FromErrors extends StatelessWidget {
-  const FromErrors({
-    super.key,
-    required this.errors,
-  });
-
-  final List<String> errors;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(
-          errors.length, (index) => fromErros(error: errors[index])),
-    );
-  }
-
-  Row fromErros({String error = ''}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const Icon(Icons.error_outline_outlined, color: kErrorBorderColor),
-        Text(
-          error,
-          style: const TextStyle(color: kErrorBorderColor, fontSize: 14),
-        )
-      ],
-    );
   }
 }
 

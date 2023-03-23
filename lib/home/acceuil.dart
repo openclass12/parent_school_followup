@@ -25,7 +25,6 @@ class _AceuilScrennState extends State<AceuilScrenn> {
         "genie logicile", ["math", "francais"], [10, 12])
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,11 +41,13 @@ class _AceuilScrennState extends State<AceuilScrenn> {
         centerTitle: false,
         actions: const [Icon(Icons.bookmark)],
       ),
-      body: ListView.builder(
-        itemCount: etudiants.length,
-        itemBuilder: (context, index) {
-          return afficher_carte(etudiant: etudiants[index]);
-        },
+      body: Column(
+        children: const [
+          Padding(
+            padding: EdgeInsets.only(left: 10, top: kDefaultPadding),
+            child: CardPresentation(),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: kPrimaryColorIcon,
@@ -62,125 +63,164 @@ class _AceuilScrennState extends State<AceuilScrenn> {
   }
 }
 
-class afficher_carte extends StatelessWidget {
-  const afficher_carte({
-    super.key,
-    required this.etudiant,
-  });
-  final Etudiant etudiant;
+class CardPresentation extends StatelessWidget {
+  const CardPresentation({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(kDefaultPadding),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Presentation(etudiant: etudiant,)));
-        },
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.9,
-          height: 250,
-          decoration: BoxDecoration(
-            gradient: kPrimaryGradientColor,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Stack(
-            children: [
-              Positioned(
-                  top: MediaQuery.of(context).size.width * 0.15,
-                  left: 0,
-                  child: CircleAvatar(
-                    radius: MediaQuery.of(context).size.width * 0.15,
-                    backgroundImage: AssetImage(etudiant.imagephoto),
-                  )),
-              Positioned(
-                  top: 2,
-                  right: 0,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    child: Column(
-                      children: [
-                        ListTileProfile(
-                          firstTilte: "matricule",
-                          subTitle: etudiant.matricule,
-                          onPresse: () {},
-                          iconsprofile: Icons.key,
+    var size = MediaQuery.of(context).size;
+    return Card(
+      elevation: 8,
+      child: Container(
+        height: 270,
+        width: size.width * 0.9,
+        decoration: BoxDecoration(
+          color: kPrimaryText,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 150,
+                  child: Image.asset("image/photo_etudiant/photo1.JPG"),
+                ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, bottom: 12),
+                      child: SizedBox(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const CircleAvatar(
+                                  backgroundColor: kPrimaryColorFond,
+                                  child: Text(
+                                    "N",
+                                    style: TextStyle(
+                                        color: kPrimaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                                Text("Nom : ",
+                                    style: TextStyle(
+                                      color: Colors.black26.withOpacity(0.5),
+                                      fontSize: 19,
+                                    )),
+                                const Text(
+                                  "Gamo Silatchom \nFreddy",
+                                  style: TextStyle(
+                                      color: kPrimaryColorFond, fontSize: 16,fontWeight: FontWeight.w600),
+                                )
+                              ],
+                            ),
+                          ],
                         ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Divider(
-                            color: Colors.yellow,
-                            thickness: 1,
-                          ),
-                        ),
-                        ListTileProfile(
-                          firstTilte: "Nom ",
-                          subTitle: etudiant.nom,
-                          onPresse: () {},
-                          iconsprofile: Icons.key,
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Divider(
-                            color: Colors.yellow,
-                            thickness: 1,
-                          ),
-                        ),
-                        ListTileProfile(
-                          firstTilte: "Filiere",
-                          subTitle: "GENIE logiciel",
-                          onPresse: () {},
-                          iconsprofile: Icons.key,
-                        ),
-                      ],
+                      ),
                     ),
-                  ))
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ListTileProfile extends StatelessWidget {
-  final String firstTilte;
-  final String subTitle;
-  final IconData iconsprofile;
-  final Function() onPresse;
-  const ListTileProfile(
-      {super.key,
-      required this.firstTilte,
-      required this.subTitle,
-      required this.iconsprofile,
-      required this.onPresse});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPresse,
-      child: ListTile(
-        title: Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: Text(
-            firstTilte,
-            style: const TextStyle(
-                color: kTexColor,
-                fontSize: kDefaultPadding - 10,
-                fontWeight: FontWeight.w700),
-          ),
-        ),
-        subtitle: Text(subTitle,
-            style: const TextStyle(
-                color: kPrimarColor,
-                fontSize: kDefaultPadding - 12,
-                fontWeight: FontWeight.w700)),
-        leading: Icon(
-          iconsprofile,
-          color: kTexColor,
+                    SizedBox(
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const CircleAvatar(
+                                backgroundColor: kPrimaryGreenButton,
+                                child: Text(
+                                  "F",
+                                  style: TextStyle(
+                                      color: kPrimaryText,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                              Text("Filiere : ",
+                                  style: TextStyle(
+                                    color: Colors.black26.withOpacity(0.5),
+                                    fontSize: 19,
+                                  )),
+                              const Text(
+                                "genie logiciel",
+                                style: TextStyle(
+                                    color: kPrimaryGreenButton, fontSize: 16),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          right: 80, top: 12),
+                      child: SizedBox(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const CircleAvatar(
+                                  backgroundColor: kPrimaryRedButton,
+                                  child: Text(
+                                    "N",
+                                    style: TextStyle(
+                                        color: kPrimaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                                Text("Niveau : ",
+                                    style: TextStyle(
+                                      color: Colors.black26.withOpacity(0.5),
+                                      fontSize: 19,
+                                    )),
+                                const Text(
+                                  "II",
+                                  style: TextStyle(
+                                      color: kPrimaryRedButton, fontSize: 16),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            const SizedBox(height: kDefaultPadding),
+            Row(
+              children: [
+                TextButton(
+                    onPressed: () {},
+                    child: Container(
+                      width: size.width * 0.4,
+                      height: 50,
+                      decoration: const BoxDecoration(
+                          color: kPrimaryGreenButton,
+                          borderRadius:
+                              BorderRadius.all(Radius.elliptical(5, 2))),
+                      child: const Center(child: Text("voir infos ",style: TextStyle(color: kPrimaryText, fontSize: 17),)),
+                    )),
+                    TextButton(
+                    onPressed: () {},
+                    child: Container(
+                      width: size.width * 0.4,
+                      height: 50,
+                      decoration: const BoxDecoration(
+                          color: kPrimaryRedButton,
+                          borderRadius:
+                              BorderRadius.all(Radius.elliptical(5, 2))),
+                      child: const Center(child: Text("supprimer ", style: TextStyle(color: kPrimaryText, fontSize: 17),),),
+                    ))
+              ],
+            )
+          ],
         ),
       ),
     );

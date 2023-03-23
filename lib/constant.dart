@@ -25,3 +25,10 @@ const String kEmailNullError = "entrez votre email";
 const String kEmailInvalidError = "entrez un email valide";
 const String kPassNullError = "mot de passe trop court";
 const String kMatchPassError = "mot de passe n'exsite pas ";
+
+// couleur nouvelles
+const Color kPrimaryRedButton = Color(0xFFFE4A49);
+const Color kPrimaryGreenButton = Color(0xFF009FB7);
+const Color kPrimaryColorFond = Color(0xFFFED766);
+const Color kPrimaryText = Color(0xFFF4F4F8);
+const Color kPrimaryBorder = Color(0xFFE6E6EA);

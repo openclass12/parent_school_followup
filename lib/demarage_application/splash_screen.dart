@@ -17,50 +17,52 @@ class _SplahScreenState extends State<SplahScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(milliseconds: 6000), () {
-          Navigator.pushReplacementNamed(context, ConnexionScren.routeName);
+    Timer(const Duration(milliseconds: 10000), () {
+      Navigator.pushReplacementNamed(context, ConnexionScren.routeName);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+      backgroundColor: kTexColor,
+      body: Container(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+            const Animation_lancement(
+                child: FlutterLogo(
+                  size: 150,
+                  textColor: kPrimaryColorIcon,
+                ),
+                delay: 500),
+            Row(
               children: [
-                Animation_lancement(
-                  delay: 2000,
-                  child: Column(children: const [
+                Column(
+                  children: const [
                     Text(
-                      "Parent",
+                      "Suivie Scolaire",
                       style: TextStyle(
                           color: kPrimaryColorIcon,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 2.0),
+                          fontSize: 25,
+                          fontWeight: FontWeight.w700),
                     ),
-                    Text("SchoolFollow",
-                        style: TextStyle(
-                            color: kPrimaryColorIcon,
-                            fontSize: 28,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: -2)),
-                  ]),
+                    Text(
+                      "parentale",
+                      style: TextStyle(
+                          color: kPrimaryColorIcon,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w200),
+                    ),
+                  ],
                 ),
-                const Animation_lancement(
-                    delay: 4000,
-                    child: FlutterLogo(
-                      size: 200,
-                    )),
+                const Text("Suivez votre \n enfant", style: TextStyle(color: kPrimaryColorIcon,fontSize: 25,fontWeight: FontWeight.w700),),
               ],
-            ),
-          ),
+            )
+          ]),
         ),
       ),
     );
-
   }
 }

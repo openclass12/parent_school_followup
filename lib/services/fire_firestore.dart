@@ -12,11 +12,18 @@ class Firestorage {
     final CollectionReference collecion =
         FirebaseFirestore.instance.collection('Etudiant');
     String res = 'Echec le matricule est incorect';
-    String ref  = collecion.doc(docID).toString();
+    String ref = collecion.doc(docID).toString();
     if (ref == Matricule) {
-      res='reuissie'
+      res = 'reuissie';
       return res;
     }
     return res;
+  }
+  Future<Map<String, dynamic>> suivieEtudiantTest(String matricule) async {
+    final CollectionReference collecion =
+        FirebaseFirestore.instance.collection('Etudiant');
+    var data =
+        (await collecion.doc(matricule).get()).data() as Map<String, dynamic>;
+    return data;
   }
 }

@@ -19,6 +19,7 @@ class Firestorage {
     }
     return res;
   }
+
   Future<Map<String, dynamic>> suivieEtudiantTest(String matricule) async {
     final CollectionReference collecion =
         FirebaseFirestore.instance.collection('Etudiant');

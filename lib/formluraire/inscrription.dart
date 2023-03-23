@@ -345,59 +345,9 @@ TextFormField inputEmail() {
   );
 }
 
-TextFormField inputconfirmPassword() {
-  return TextFormField(
-    obscureText: _comfirmVissible,
-    validator: (value) {
-      if (value!.isEmpty) {
-        return kChamVide;
-      } else if (value.length < 8) {
-        return kEmailInvalidError;
-      }
-      return null;
-    },
-    decoration: InputDecoration(
-      labelText: "password",
-      hintText: "Enter votre mot de passe",
-      floatingLabelBehavior: FloatingLabelBehavior.always,
-      suffixIcon: IconInput(
-        icon: _passwordVissible ? Icons.lock : Icons.lock_open,
-        onpress: () {},
-      ),
-      suffixIconColor: kPrimaryColorIcon,
-    ),
-  );
-}
 
-class FromErrors extends StatelessWidget {
-  const FromErrors({
-    super.key,
-    required this.errors,
-  });
 
-  final List<String> errors;
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(
-          errors.length, (index) => fromErros(error: errors[index])),
-    );
-  }
-
-  Row fromErros({String error = ''}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const Icon(Icons.error_outline_outlined, color: kErrorBorderColor),
-        Text(
-          error,
-          style: const TextStyle(color: kErrorBorderColor, fontSize: 14),
-        )
-      ],
-    );
-  }
-}
 
 class IconInput extends StatelessWidget {
   final IconData icon;

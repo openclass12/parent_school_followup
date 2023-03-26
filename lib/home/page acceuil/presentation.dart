@@ -4,11 +4,19 @@ import 'package:parent_school_followup/home/page acceuil/test_fire.dart';
 
 import 'class.dart';
 
-class Presentation extends StatelessWidget {
-  Presentation({super.key, required this.etudiant});
+class Presentation extends StatefulWidget {
+  const Presentation({super.key, required this.etudiant});
   final Etudiant etudiant;
+
+  @override
+  State<Presentation> createState() => _PresentationState();
+}
+
+class _PresentationState extends State<Presentation> {
   final anne = ["2022-2023"];
+
   String? value;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +41,7 @@ class Presentation extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: CircleAvatar(
-                  backgroundImage: AssetImage(etudiant.imagephoto),
+                  backgroundImage: AssetImage(widget.etudiant.imagephoto),
                 ),
               ),
               const Text(
@@ -56,7 +64,7 @@ class Presentation extends StatelessWidget {
                     icon: Icons.nat,
                     onpress: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => TESE()));
+                          MaterialPageRoute(builder: (context) => const TESE()));
                     }),
                 HomeCard(
                     text: "Programme",
@@ -97,7 +105,7 @@ class Presentation extends StatelessWidget {
   DropdownMenuItem<String> buildMenuItems(String anne) => DropdownMenuItem(
           child: Text(
         anne,
-        style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+        style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
       ));
 }
 

@@ -5,7 +5,7 @@ import 'package:parent_school_followup/formluraire/resetpassword.dart';
 import '../animation/animation_lancement.dart';
 import 'package:parent_school_followup/constant.dart';
 
-import '../home/home.dart';
+
 import '../services/auth_services.dart';
 import '../widget/button.dart';
 //import 'package:parent_school_followup/size_config.dart';
@@ -241,9 +241,7 @@ class _SingFormState extends State<SingForm> {
                             isLoading = false;
                           });
 
-                          Navigator.of(context).popAndPushNamed(
-                            HomeNavigation.routeName,
-                          );
+                          
                         } on FirebaseAuthException catch (e) {
                           showSnackbar(context,e.message!);
                           setState(() {

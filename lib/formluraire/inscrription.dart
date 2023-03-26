@@ -6,7 +6,6 @@ import 'package:parent_school_followup/formluraire/validation.dart';
 import '../animation/animation_lancement.dart';
 import 'package:parent_school_followup/constant.dart';
 import 'package:parent_school_followup/formluraire/connexion.dart';
-import '../home/home.dart';
 import '../services/auth_services.dart';
 import '../widget/button.dart';
 import '../widget/showSnackbar.dart';
@@ -45,8 +44,8 @@ class _InscirptionScreenState extends State<InscirptionScreen> {
             child: Column(children: [
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.9,
-            child: Column(
-              children: const [
+            child:const  Column(
+              children: [
                 SizedBox(height: 30),
                 Animation_lancement(
                   delay: 1200,
@@ -141,7 +140,7 @@ class _SingFormState extends State<SingForm> {
     _authServices = AuthServices();
     super.initState();
   }
-
+  @override
   void dispose() {
     super.dispose();
     _emailcontroller.dispose();

@@ -1,12 +1,18 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:parent_school_followup/formluraire/resetpassword.dart';
+//import 'package:parent_school_followup/services/firebase_auth.dart';
 //import 'package:parent_school_followup/theme.dart';
 import '../animation/animation_lancement.dart';
 import 'package:parent_school_followup/constant.dart';
-
-import '../home/home.dart';
+import 'package:parent_school_followup/services/fire_firestore.dart';
+import 'package:parent_school_followup/home/acceuil.dart';
 import '../widget/button.dart';
+import '../widget/showSnackbar.dart';
+
 //import 'package:parent_school_followup/size_config.dart';
+
+final TextEditingController _matriculecontrolleur = TextEditingController();
 
 class ValidationReset extends StatefulWidget {
   static String routeName = '/Validation';
@@ -25,8 +31,8 @@ class _ValidationResetState extends State<ValidationReset> {
             child: Column(children: [
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.9,
-            child: Column(
-              children: const [
+            child: const Column(
+              children: [
                 SizedBox(height: 50),
                 Animation_lancement(
                   delay: 1200,
@@ -85,6 +91,13 @@ class SingForm_mat extends StatefulWidget {
 class _SingForm_matState extends State<SingForm_mat> {
   final GlobalKey<FormState> fromKey = GlobalKey<FormState>();
   final List<String> errors = [];
+  late Firestorage _firestorage = Firestorage();
+  @override
+  void dispose() {
+    super.dispose();
+    _matriculecontrolleur.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -94,7 +107,26 @@ class _SingForm_matState extends State<SingForm_mat> {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: kDefaultPadding),
-              child: inputName(),
+              child: TextFormField(
+                keyboardType: TextInputType.name,
+                controller: _matriculecontrolleur,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return kChamVide;
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: "Matricule",
+                  hintText: "Entrez un matricule",
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  suffixIcon: IconInput(
+                    icon: Icons.key,
+                    onpress: () {},
+                  ),
+                  suffixIconColor: kPrimaryColorIcon,
+                ),
+              ),
             ),
             const SizedBox(height: 30),
             FromErrors(errors: errors),
@@ -103,10 +135,17 @@ class _SingForm_matState extends State<SingForm_mat> {
               child: DefaultButton(
                 title: 'connexion',
                 iconData: Icons.arrow_forward_outlined,
-                onPress: () {
+                onPress: () async {
                   if (fromKey.currentState!.validate()) {
-                    Navigator.pushReplacement(
-                        context, MaterialPageRoute(builder: (context)=>HomeNavigation()));
+                    try {
+                      var data = await _firestorage
+                          .suivieEtudiantTest(_matriculecontrolleur.text);
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: ((context) => AceuilScrenn(data: data,))));
+                      
+                    } on FirebaseException catch (e) {
+                      showSnackbar(context, e.message!);
+                    }
                   } else {
                     print("zerze");
                   }

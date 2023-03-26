@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:parent_school_followup/theme.dart';
-import 'home/home.dart';
 import 'routes/routes.dart';
 import 'demarage_application/splash_screen.dart';
 import 'package:parent_school_followup/constant.dart';
 import 'package:parent_school_followup/formluraire/connexion.dart';
 import 'package:parent_school_followup/formluraire/inscrription.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:parent_school_followup/formluraire/validation.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: theme(),
 
-      initialRoute: ConnexionScren.routeName,
+      initialRoute: ValidationReset.routeName,
       routes: routes,
     );
   }

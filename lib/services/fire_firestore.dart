@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:parent_school_followup/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Firestorage {
@@ -8,14 +6,14 @@ class Firestorage {
 
   // suivi etudiant
 
-  Future<String> suivieEtudiant(String docID, String Matricule) async {
+  Future<String> suivieEtudiant(String docID, String matricule) async {
     final CollectionReference collecion =
         FirebaseFirestore.instance.collection('Etudiant');
     String res = 'Echec le matricule est incorect';
     String ref = collecion.doc(docID).toString();
-    if (ref == Matricule) {
+    if (ref == matricule) {
       res = 'reuissie';
-      return res;
+      return matricule;
     }
     return res;
   }
@@ -23,6 +21,7 @@ class Firestorage {
   Future<Map<String, dynamic>> suivieEtudiantTest(String matricule) async {
     final CollectionReference collecion =
         FirebaseFirestore.instance.collection('Etudiant');
+    bool verifier = false;
     var data =
         (await collecion.doc(matricule).get()).data() as Map<String, dynamic>;
     return data;

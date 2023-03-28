@@ -6,6 +6,8 @@ import 'package:parent_school_followup/formluraire/connexion.dart';
 import '../animation/animation_lancement.dart';
 import 'package:parent_school_followup/constant.dart';
 
+import '../formluraire/loginscreen.dart';
+
 class SplahScreen extends StatefulWidget {
   static String routeName = 'SplashScren';
 
@@ -17,8 +19,8 @@ class _SplahScreenState extends State<SplahScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(milliseconds: 10000), () {
-      Navigator.pushReplacementNamed(context, ConnexionScren.routeName);
+    Timer(const Duration(milliseconds: 6000), () {
+      Navigator.pushReplacementNamed(context, Loginscreen.routeName);
     });
   }
 
@@ -27,42 +29,17 @@ class _SplahScreenState extends State<SplahScreen> {
     return Scaffold(
       backgroundColor: kTexColor,
       body: Container(
-        child: Center(
+        child: const Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-            const Animation_lancement(
-                child: FlutterLogo(
-                  size: 150,
-                  textColor: kPrimaryColorIcon,
-                ),
-                delay: 500),
-            Row(
-              children: [
-                Column(
-                  children: const [
-                    Text(
-                      "Suivie Scolaire",
-                      style: TextStyle(
-                          color: kPrimaryColorIcon,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    Text(
-                      "parentale",
-                      style: TextStyle(
-                          color: kPrimaryColorIcon,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w200),
-                    ),
-                  ],
-                ),
-                const Text("Suivez votre \n enfant", style: TextStyle(color: kPrimaryColorIcon,fontSize: 25,fontWeight: FontWeight.w700),),
+             Animation_lancement(
+                child: Image(image: AssetImage("image/demarrage/logo.jpg")),
+                delay: 600),
               ],
             )
-          ]),
+          ),
         ),
-      ),
     );
   }
 }

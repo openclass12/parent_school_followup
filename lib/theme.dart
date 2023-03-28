@@ -30,13 +30,6 @@ InputDecorationTheme inputdecaration() {
     ),
     
    
-    errorBorder: OutlineInputBorder(
-      
-      borderSide: BorderSide(color: kErrorBorderColor),
-      gapPadding: 5,),
-     focusedErrorBorder:   OutlineInputBorder(
     
-      borderSide:  BorderSide(color: kErrorBorderColor),
-      gapPadding: 5,),
   );
 }

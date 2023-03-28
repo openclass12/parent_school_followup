@@ -198,7 +198,7 @@ class _SingFormState extends State<SingForm> {
                       });
 
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: ((context) => ValidationReset())));
+                          builder: ((context) =>  AcceuilScreen())));
                     } on FirebaseAuthException catch (e) {
                       
                       showSnackbar(context,e.message!);

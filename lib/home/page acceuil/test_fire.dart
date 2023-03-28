@@ -60,8 +60,7 @@ class _TestState extends State<Test> {
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
                 Map<String, dynamic> data =
                     document.data() as Map<String, dynamic>;
-                DocumentReference<Map<String, dynamic>> filiere =
-                    document.data() as DocumentReference<Map<String, dynamic>>;
+                
                 return ListTile(
                   subtitle: Text(data['niveau'].toString()),
                 );

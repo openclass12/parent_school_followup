@@ -23,12 +23,23 @@ class AceuilScrenn extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
+ 
+
     return Scaffold(
-      body: Column(
-        children: [
-          Center(child: Text(data['Nom'])),
-        ],
+      
+      body: Center(
+        child: Column(
+          children: [
+            Center(child: Text(data['Nom'])),
+            Center(child: Text(data['filiere'])),
+            Center(child: Text(data['niveau'].toString())),
+            Center(child: Text(data['pension'].toString())),
+
+            
+          ],
+        ),
       ),
     );
   }
 }
+ 

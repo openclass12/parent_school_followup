@@ -17,6 +17,6 @@ Map<String, WidgetBuilder> routes={
   ConnexionScren.routeName: (context)=> ConnexionScren(),
   ResetPassword.routeName:(context) => ResetPassword(),
   InscirptionScreen.routeName:(context) => InscirptionScreen(),
-  ValidationReset.routeName:(context)=> ValidationReset(),
+   AcceuilScreen.routeName:(context) => AcceuilScreen(),
  
 };

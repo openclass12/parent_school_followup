@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: theme(),
 
-      initialRoute: ValidationReset.routeName,
+      initialRoute: AcceuilScreen.routeName,
       routes: routes,
     );
   }

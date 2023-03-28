@@ -22,27 +22,21 @@ AppBarTheme appbardefault() {
 }
 
 InputDecorationTheme inputdecaration() {
-  return InputDecorationTheme(
+  return const  InputDecorationTheme(
     
-    contentPadding: const EdgeInsets.symmetric(
+    contentPadding: EdgeInsets.symmetric(
       horizontal: 30,
       vertical: 20,
     ),
-    enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(28),
-        borderSide: const BorderSide(color: kTextBlockColor),
-        gapPadding: 5),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(28),
-      borderSide: const BorderSide(color: kTextBlockColor),
-      gapPadding: 5,),
+    
+   
     errorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(28),
-      borderSide: const BorderSide(color: kErrorBorderColor),
+      
+      borderSide: BorderSide(color: kErrorBorderColor),
       gapPadding: 5,),
-     focusedErrorBorder:  OutlineInputBorder(
-      borderRadius: BorderRadius.circular(28),
-      borderSide: const BorderSide(color: kErrorBorderColor),
+     focusedErrorBorder:   OutlineInputBorder(
+    
+      borderSide:  BorderSide(color: kErrorBorderColor),
       gapPadding: 5,),
   );
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parent_school_followup/theme.dart';
 import 'formluraire/loginscreen.dart';
+import 'home/babilliard.dart';
 import 'routes/routes.dart';
 import 'demarage_application/splash_screen.dart';
 import 'package:parent_school_followup/constant.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
 
       initialRoute: SplahScreen.routeName,
       routes: routes,
+      
     );
   }
 }

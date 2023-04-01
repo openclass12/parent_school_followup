@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
 
       initialRoute: SplahScreen.routeName,
       routes: routes,
+    
       
     );
   }

@@ -201,9 +201,9 @@ Widget builEmail() {
               BoxShadow(
                   color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
             ]),
-        height: 58,
+        height: 65,
         child: TextFormField(
-          
+         controller: _emailcontroller,  
           keyboardType: TextInputType.emailAddress,
           validator: (value) {
             if (value!.isEmpty) {
@@ -213,7 +213,8 @@ Widget builEmail() {
           },
           style: const TextStyle(color: Colors.black87),
           decoration: const InputDecoration(
-              hintText: "Enter votre nom",
+            border: InputBorder.none,
+              hintText: "Enter votre email",
               hintStyle: TextStyle(color: Colors.black38),
               prefixIcon: Icon(
                 Icons.email,
@@ -243,8 +244,9 @@ Widget builpassword() {
               BoxShadow(
                   color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
             ]),
-        height: 58,
+        height: 70,
         child: TextFormField(
+          controller: _passcontroller,
           keyboardType: TextInputType.emailAddress,
           validator: (value) {
             if (value!.isEmpty) {

@@ -252,7 +252,7 @@ class _AcceuilScreenState extends State<AcceuilScreen> {
                   })),
             )
           : const Center(
-              child: Text("jgbkfgjhfg"),
+              child: Text(""),
             ),
     );
   }
